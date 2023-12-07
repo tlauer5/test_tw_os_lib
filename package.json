@@ -1,0 +1,24 @@
+{
+  "name": "@timtester-tw/test-tw-os-lib",
+  "version": "1.0.0",
+  "description": "Checks data integrity of sensor data with blockchain based data integrity scheme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tlauer5/test_tw_os_lib.git"
+  },
+  "keywords": [
+    "Data",
+    "Integrity",
+    "TrueWine"
+  ],
+  "author": "Tim Lauer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tlauer5/test_tw_os_lib/issues"
+  },
+  "homepage": "https://github.com/tlauer5/test_tw_os_lib#readme"
+}
