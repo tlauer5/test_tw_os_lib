@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/tlauer5/test_tw_os_lib/issues"
   },
-  "homepage": "https://github.com/tlauer5/test_tw_os_lib#readme"
+  "homepage": "https://github.com/tlauer5/test_tw_os_lib#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "ethers": "^5.4.0"
+  }
 }
