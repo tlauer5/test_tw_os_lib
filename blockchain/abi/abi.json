@@ -82,13 +82,13 @@
                 "type": "uint256"
             },
             {
-                "indexed": true,
+                "indexed": false,
                 "internalType": "string",
                 "name": "merkleRoot",
                 "type": "string"
             },
             {
-                "indexed": true,
+                "indexed": false,
                 "internalType": "string",
                 "name": "leaf",
                 "type": "string"
@@ -183,7 +183,8 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [],
@@ -196,7 +197,8 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [],
@@ -209,45 +211,8 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "multibase_",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "version_",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "multicodec_",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "multihashAlgorithm_",
-                "type": "string"
-            },
-            {
-                "internalType": "uint16",
-                "name": "multihashLength_",
-                "type": "uint16"
-            },
-            {
-                "internalType": "string",
-                "name": "dataTemplateCid_",
-                "type": "string"
-            }
-        ],
-        "name": "addCidDataFormat",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [
@@ -291,52 +256,8 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getCurrenCidDataFormat",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "string",
-                        "name": "multibase",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "version",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "multicodec",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "multihashAlgorithm",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "uint16",
-                        "name": "multihashLength",
-                        "type": "uint16"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "dataTemplateCid",
-                        "type": "string"
-                    }
-                ],
-                "internalType": "struct Storage_V1.CidDataFormat",
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [
@@ -355,7 +276,8 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [
@@ -397,7 +319,8 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [],
@@ -410,7 +333,8 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [
@@ -426,13 +350,6 @@
             }
         ],
         "name": "renounceRole",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "requestMerkleRoot",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -466,7 +383,28 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "bytes4",
+                "name": "interfaceId",
+                "type": "bytes4"
+            }
+        ],
+        "name": "supportsInterface",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [
@@ -487,6 +425,13 @@
         "type": "function"
     },
     {
+        "inputs": [],
+        "name": "requestMerkleRoot",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "inputs": [
             {
                 "internalType": "address",
@@ -502,20 +447,85 @@
     {
         "inputs": [
             {
-                "internalType": "bytes4",
-                "name": "interfaceId",
-                "type": "bytes4"
+                "internalType": "string",
+                "name": "multibase_",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "version_",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "multicodec_",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "multihashAlgorithm_",
+                "type": "string"
+            },
+            {
+                "internalType": "uint16",
+                "name": "multihashLength_",
+                "type": "uint16"
+            },
+            {
+                "internalType": "string",
+                "name": "dataTemplateCid_",
+                "type": "string"
             }
         ],
-        "name": "supportsInterface",
+        "name": "addCidDataFormat",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getCurrenCidDataFormat",
         "outputs": [
             {
-                "internalType": "bool",
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "multibase",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "version",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "multicodec",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "multihashAlgorithm",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint16",
+                        "name": "multihashLength",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "dataTemplateCid",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct Storage_V2.CidDataFormat",
                 "name": "",
-                "type": "bool"
+                "type": "tuple"
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     }
 ]

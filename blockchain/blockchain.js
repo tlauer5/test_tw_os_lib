@@ -1,6 +1,6 @@
 const { ethers } = require("ethers")
 
-function createContract(provider_url, abi, contract_address) {
+function create_contract(provider_url, abi, contract_address) {
 
     const provider = new ethers.providers.JsonRpcProvider(provider_url);
 
@@ -47,6 +47,52 @@ async function read_merkle_root (contract) {
     }
 }
 
+async function read_all_events(contract) {
+    const fromBlock = 0;
+    const toBlock = 'latest';
+    const events = await contract.queryFilter({}, fromBlock, toBlock);
+
+    merkleRootUpdatedEvents = []
+    cidDataFormatUpdatedEvents = []
+    merkleRootRequestedEvents = []
+    for (e of events) {
+        // console.log(e.event)
+        if (e.event == "MerkleRootUpdated") {
+
+            merkleRootUpdatedEvents.push({
+                blockNumber: parseInt(e.args[0]._hex, 16),
+                leaf: e.args[2],
+                merkleRoot: e.args[1]
+            })
+
+        } else if (e.event == "CidDataFormatUpdated") {
+
+            cidDataFormatUpdatedEvents.push({
+                blockNumber: parseInt(e.args[0]._hex, 16),
+                multibase: e.args[1],
+                version: e.args[2],
+                multicodec: e.args[3],
+                multihashAlgorithm: e.args[4],
+                multihashLength: e.args[5],
+                dataTemplateCid: e.args[6]
+            })
+
+        } else if (e.event == "MerkleRootRequested") {
+            merkleRootRequestedEvents.push({
+                blockNumber: parseInt(e.args[0]._hex, 16)
+            })
+
+
+        }
+    }// mit neuem Contract dann auch noch nach sensor address events abfragen
+
+    return {
+        merkleRootRequestedEvents: merkleRootRequestedEvents,
+        merkleRootUpdatedEvents: merkleRootUpdatedEvents,
+        cidDataFormatUpdatedEvents: cidDataFormatUpdatedEvents
+    }
+}
+
 
 
 
@@ -54,6 +100,7 @@ module.exports = {
     read_sensor,
     read_cid_data_format,
     read_merkle_root,
-    createContract
+    create_contract,
+    read_all_events
 };
 
