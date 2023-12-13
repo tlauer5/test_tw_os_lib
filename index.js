@@ -1,4 +1,4 @@
-const { createContract, readSensor, readMerkleRoot, readAllEvents } = require("./blockchain/blockchain")
+const { createContract, readSensor, readMerkleRoot, readAllEvents, readCidDataFormat } = require("./blockchain/blockchain")
 require('dotenv').config();
 const { StandardMerkleTree } = require("@openzeppelin/merkle-tree");
 const DEFAULT_CONTRACT_ADDRESS = "0x96347d982759b643997A1813D14Db1F606aa9ad4"
@@ -6,13 +6,12 @@ const DEFAULT_ABI = require("./blockchain/abi/abi.json");
 const { getAllData } = require("./data_fetcher/data_fetcher");
 const { plotData } = require("./data_plotter/data_plotter");
 const { checkBlockNumbers, assignDataForVerification, recoverAddressFromData } = require("./data_verifier/data_verifier");
-const { generateLeaf, createCid, fetchDataFromIpfs, fillTemplateWithData, generateJsonForIpfs, storeBlobToIPFS } = require("./ipfs/ipfs");
+const { generateLeaf, createCid, fetchDataFromIpfs, fillTemplateWithData, generateBufferForIpfs, storeBlobToIPFS } = require("./ipfs/ipfs");
 
 const DEFAULT_DATA_API_URL = "http://127.0.0.1:8000/read-table"
 
 
 const general = {
-    baseIpfsUrl: "https://ipfs.io/ipfs/",
     temperatureUnit: "°C",
     humidityUnit: "%",
     chainId: 80001,
@@ -88,9 +87,11 @@ module.exports = {
     createCid,
     fetchDataFromIpfs,
     fillTemplateWithData,
-    generateJsonForIpfs,
-    generateLeaf,
-    storeBlobToIPFS
+    generateBufferForIpfs,
+    storeBlobToIPFS,
+    readSensor,
+    readMerkleRoot,
+    readCidDataFormat
 }
 
 

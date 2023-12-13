@@ -20,6 +20,24 @@ async function readSensor (contract) {
     }
 }
 
+async function readCidDataFormat () {
+    try {
+        const result = await contract.cidDataFormat();
+        console.log("Read cidDataFormat: " + result + " from contract.\n");
+
+        return {
+            multibase: result.multibase,
+            version: result.version,
+            multicodec: result.multicodec,
+            multihashAlgorithm: result.multihashAlgorithm,
+            multihashLength: result.multihashLength,
+            dataTemplateCid: result.dataTemplateCid
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
 
 async function readMerkleRoot (contract) {
     try {
@@ -90,6 +108,7 @@ module.exports = {
     readSensor,
     readMerkleRoot,
     createContract,
-    readAllEvents
+    readAllEvents,
+    readCidDataFormat
 };
 

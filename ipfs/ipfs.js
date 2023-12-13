@@ -9,8 +9,8 @@ const axios = require('axios');
 
 
 async function generateLeaf(general, data) {
-  const jsonForIpfs = await generateJsonForIpfs(general, data)
-  const cid = await createCid(jsonForIpfs, data.cidDataFormat)
+  const bufferForIpfs = await generateBufferForIpfs(general, data)
+  const cid = await createCid(bufferForIpfs, data.cidDataFormat)
   return cid;
 }
 
@@ -32,7 +32,7 @@ async function storeBlobToIPFS (blobData, apiKey) {
 }
 
 
-async function createCid (data, cidDataFormat) {
+async function createCid (buffer, cidDataFormat) {
 
   const algorithm = cidDataFormat.multihashAlgorithm; //"sha2-256"
   const version = getCidVersion(cidDataFormat.version); //1
@@ -40,7 +40,7 @@ async function createCid (data, cidDataFormat) {
 
 
   // Hash the data using SHA-256
-  const hash = await multihashing(data, algorithm);
+  const hash = await multihashing(buffer, algorithm);
 
   // Create a CID using the hash
   const cid = new CID(version, multicodec, hash);
@@ -56,10 +56,10 @@ function getCidVersion(version) {
   return parseInt(version[version.length - 1], 10);
 }
 
-async function fetchDataFromIpfs(baseIpfsUrl, cid) {
+async function fetchDataFromIpfs(cid) {
 
 
-  const ipfsUrl = `${baseIpfsUrl}${cid}`;
+  const ipfsUrl = `https://ipfs.io/ipfs/${cid}`;
 
     try {
       const response = await axios.get(ipfsUrl);
@@ -76,8 +76,8 @@ async function fetchDataFromIpfs(baseIpfsUrl, cid) {
 
 function fillTemplateWithData (template, general, data) {
 
-  template["blockNumber"] = data.blockNumber
-  template["chainId"] = general.chainId
+  template["blockNumber"] = parseInt(data.blockNumber)
+  template["chainId"] = parseInt(general.chainId)
   template["contractAddress"] = general.contractAddress
 
   template["units"]["temperature"] = general.temperatureUnit
@@ -92,8 +92,8 @@ function fillTemplateWithData (template, general, data) {
 }
 
 
-async function generateJsonForIpfs (general, data) {
-  const template = await fetchDataFromIpfs(general.baseIpfsUrl, data.cidDataFormat.dataTemplateCid);
+async function generateBufferForIpfs (general, data) {
+  const template = await fetchDataFromIpfs(data.cidDataFormat.dataTemplateCid);
   filledTemplate = fillTemplateWithData(template, general, data);
 
   const formattedJson = JSON.stringify(filledTemplate, null, 2);
@@ -106,7 +106,7 @@ module.exports = {
   createCid,
   fetchDataFromIpfs,
   fillTemplateWithData,
-  generateJsonForIpfs,
+  generateBufferForIpfs,
   generateLeaf,
   storeBlobToIPFS
 };
