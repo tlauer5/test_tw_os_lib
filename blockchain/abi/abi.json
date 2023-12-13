@@ -52,7 +52,7 @@
             {
                 "indexed": false,
                 "internalType": "string",
-                "name": "dataTemplateCid_",
+                "name": "dataTemplateCid",
                 "type": "string"
             }
         ],
@@ -173,6 +173,25 @@
         "type": "event"
     },
     {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "blockNumber",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "sensorAddress",
+                "type": "address"
+            }
+        ],
+        "name": "sensorAddressUpdated",
+        "type": "event"
+    },
+    {
         "inputs": [],
         "name": "CHAINLINK_UPKEEPER",
         "outputs": [
@@ -215,14 +234,8 @@
         "constant": true
     },
     {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "cidDataFormatHistory",
+        "inputs": [],
+        "name": "cidDataFormat",
         "outputs": [
             {
                 "internalType": "string",
@@ -407,6 +420,13 @@
         "constant": true
     },
     {
+        "inputs": [],
+        "name": "requestMerkleRoot",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "inputs": [
             {
                 "internalType": "string",
@@ -420,13 +440,6 @@
             }
         ],
         "name": "setMerkleRoot",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "requestMerkleRoot",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -477,55 +490,9 @@
                 "type": "string"
             }
         ],
-        "name": "addCidDataFormat",
+        "name": "setCidDataFormat",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getCurrenCidDataFormat",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "string",
-                        "name": "multibase",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "version",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "multicodec",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "multihashAlgorithm",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "uint16",
-                        "name": "multihashLength",
-                        "type": "uint16"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "dataTemplateCid",
-                        "type": "string"
-                    }
-                ],
-                "internalType": "struct Storage_V2.CidDataFormat",
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function",
-        "constant": true
     }
 ]

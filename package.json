@@ -22,9 +22,12 @@
   },
   "homepage": "https://github.com/tlauer5/test_tw_os_lib#readme",
   "dependencies": {
+    "@openzeppelin/merkle-tree": "^1.0.5",
     "axios": "^1.6.2",
     "chartjs-node-canvas": "^4.1.6",
+    "cids": "^1.1.9",
     "dotenv": "^16.3.1",
-    "ethers": "^5.4.0"
+    "ethers": "^5.4.0",
+    "multihashing-async": "^2.1.4"
   }
 }
