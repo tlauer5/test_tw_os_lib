@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-async function get_all_data (url) {
+async function getAllData (url) {
     try {
         const response = await axios.get(url)
         return response.data;
@@ -10,8 +10,6 @@ async function get_all_data (url) {
     }
 }
 
-
-
 module.exports = {
-    get_all_data
+    getAllData
 };

@@ -28,6 +28,7 @@
     "cids": "^1.1.9",
     "dotenv": "^16.3.1",
     "ethers": "^5.4.0",
-    "multihashing-async": "^2.1.4"
+    "multihashing-async": "^2.1.4",
+    "web3": "^4.3.0"
   }
 }

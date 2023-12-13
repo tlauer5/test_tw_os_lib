@@ -2,9 +2,9 @@
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const fs = require('fs');
 
-async function plot_data (data_from_website) {
+async function plotData (dataFromWebsite) {
 
-    const data_ = extract_only_values(data_from_website); // Extrahierte Daten
+    const data_ = extract_only_values(dataFromWebsite); // Extrahierte Daten
 
     const width = 800;
     const height = 600;
@@ -73,5 +73,5 @@ function extract_only_values (data) {
 
 
 module.exports = {
-    plot_data
+    plotData
 }

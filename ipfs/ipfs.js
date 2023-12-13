@@ -8,21 +8,21 @@ const axios = require('axios');
 // Falls nötig: https://docs.ipfs.tech/concepts/content-addressing/#cid-conversion
 
 
-async function generate_leaf(general, data) {
-  const json_for_ipfs = await generate_json_for_ipfs(general, data)
-  const cid = await create_cid(json_for_ipfs, data.cidDataFormat)
-  // await storeBlobToIPFS(json_for_ipfs, apikey);
+async function generateLeaf(general, data) {
+  const jsonForIpfs = await generateJsonForIpfs(general, data)
+  const cid = await createCid(jsonForIpfs, data.cidDataFormat)
+  // await storeBlobToIPFS(jsonForIpfs, apiKey);
 
   return cid;
 }
 
-async function storeBlobToIPFS (blobData, apikey) {
+async function storeBlobToIPFS (blobData, apiKey) {
 
   try {
     const response = await axios.post("https://api.nft.storage/upload", blobData, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apikey}`
+        'Authorization': `Bearer ${apiKey}`
       }
     });
 
@@ -34,10 +34,10 @@ async function storeBlobToIPFS (blobData, apikey) {
 }
 
 
-async function create_cid (data, cidDataFormat) {
+async function createCid (data, cidDataFormat) {
 
   const algorithm = cidDataFormat.multihashAlgorithm; //"sha2-256"
-  const version = get_cid_version(cidDataFormat.version); //1
+  const version = getCidVersion(cidDataFormat.version); //1
   const multicodec = cidDataFormat.multicodec; //raw
 
 
@@ -54,14 +54,14 @@ async function create_cid (data, cidDataFormat) {
 }
 
 
-function get_cid_version(version) {
+function getCidVersion(version) {
   return parseInt(version[version.length - 1], 10);
 }
 
-async function fetch_data_from_ipfs(base_ipfs_url, cid) {
+async function fetchDataFromIpfs(baseIpfsUrl, cid) {
 
 
-  const ipfsUrl = `${base_ipfs_url}${cid}`;
+  const ipfsUrl = `${baseIpfsUrl}${cid}`;
 
     try {
       const response = await axios.get(ipfsUrl);
@@ -76,14 +76,14 @@ async function fetch_data_from_ipfs(base_ipfs_url, cid) {
 }
 
 
-function fill_template_with_data (template, general, data) {
+function fillTemplateWithData (template, general, data) {
 
-  template["block_number"] = data.blocknumber
-  template["chain_id"] = general.chain_id
-  template["contract_address"] = general.contract_address
+  template["blockNumber"] = data.blockNumber
+  template["chainId"] = general.chainId
+  template["contractAddress"] = general.contractAddress
 
-  template["units"]["temperature"] = general.temperature_unit
-  template["units"]["humidity"] = general.humidity_unit
+  template["units"]["temperature"] = general.temperatureUnit
+  template["units"]["humidity"] = general.humidityUnit
 
   template["sensor_signature"]= data.signature
 
@@ -94,20 +94,20 @@ function fill_template_with_data (template, general, data) {
 }
 
 
-async function generate_json_for_ipfs (general, data) {
-  const template = await fetch_data_from_ipfs(general.base_ipfs_url, data.cidDataFormat.dataTemplateCid);
-  filled_template = fill_template_with_data(template, general, data);
+async function generateJsonForIpfs (general, data) {
+  const template = await fetchDataFromIpfs(general.baseIpfsUrl, data.cidDataFormat.dataTemplateCid);
+  filledTemplate = fillTemplateWithData(template, general, data);
 
-  const formattedJson = JSON.stringify(filled_template, null, 2);
+  const formattedJson = JSON.stringify(filledTemplate, null, 2);
 
   const buffer = Buffer.from(formattedJson);
   return buffer;
 }
 
 module.exports = {
-  createCID: create_cid,
-  fetch_data_from_ipfs,
-  fill_template_with_data,
-  generate_json_for_ipfs,
-  generate_leaf
+  createCid,
+  fetchDataFromIpfs,
+  fillTemplateWithData,
+  generateJsonForIpfs,
+  generateLeaf
 };

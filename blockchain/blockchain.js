@@ -1,16 +1,16 @@
 const { ethers } = require("ethers")
 
-function create_contract (provider_url, abi, contract_address) {
+function createContract (providerUrl, abi, contractAddress) {
 
-    const provider = new ethers.providers.JsonRpcProvider(provider_url);
+    const provider = new ethers.providers.JsonRpcProvider(providerUrl);
 
-    const contract = new ethers.Contract(contract_address, abi, provider);
+    const contract = new ethers.Contract(contractAddress, abi, provider);
 
     return contract
 }
 
 
-async function read_sensor (contract) {
+async function readSensor (contract) {
     try {
         const result = await contract.sensor();
         console.log("Read sensor address: " + result + " from contract.\n");
@@ -21,7 +21,7 @@ async function read_sensor (contract) {
 }
 
 
-async function read_merkle_root (contract) {
+async function readMerkleRoot (contract) {
     try {
         result = await contract.merkleRoot();
         console.log("Read current merkle root: " + result + " from contract.\n");
@@ -31,7 +31,7 @@ async function read_merkle_root (contract) {
     }
 }
 
-async function read_all_events (contract) {
+async function readAllEvents (contract) {
     const fromBlock = 0;
     const toBlock = 'latest';
     const events = await contract.queryFilter({}, fromBlock, toBlock);
@@ -87,9 +87,9 @@ async function read_all_events (contract) {
 
 
 module.exports = {
-    read_sensor,
-    read_merkle_root,
-    create_contract,
-    read_all_events
+    readSensor,
+    readMerkleRoot,
+    createContract,
+    readAllEvents
 };
 

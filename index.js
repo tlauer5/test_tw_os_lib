@@ -1,57 +1,57 @@
-const { create_contract, read_sensor, read_merkle_root, read_all_events } = require("./blockchain/blockchain")
+const { createContract, readSensor, readMerkleRoot, readAllEvents } = require("./blockchain/blockchain")
 require('dotenv').config();
 const { StandardMerkleTree } = require("@openzeppelin/merkle-tree");
 const DEFAULT_CONTRACT_ADDRESS = "0x96347d982759b643997A1813D14Db1F606aa9ad4"
 const DEFAULT_ABI = require("./blockchain/abi/abi.json");
-const { get_all_data } = require("./data_fetcher/data_fetcher");
-const { plot_data } = require("./data_plotter/data_plotter");
-const { check_blocknumbers, assign_data_for_verification } = require("./data_verifier/data_verifier");
-const { generate_leaf } = require("./ipfs/ipfs");
+const { getAllData } = require("./data_fetcher/data_fetcher");
+const { plotData } = require("./data_plotter/data_plotter");
+const { checkBlockNumbers, assignDataForVerification } = require("./data_verifier/data_verifier");
+const { generateLeaf } = require("./ipfs/ipfs");
 
 const DEFAULT_DATA_API_URL = "http://127.0.0.1:8000/read_table"
 
 
 const general = {
-    base_ipfs_url: "https://ipfs.io/ipfs/",
-    temperature_unit: "°C",
-    humidity_unit: "%",
-    chain_id: 80001,
-    contract_address: "0x96347d982759b643997A1813D14Db1F606aa9ad4",
+    baseIpfsUrl: "https://ipfs.io/ipfs/",
+    temperatureUnit: "°C",
+    humidityUnit: "%",
+    chainId: 80001,
+    contractAddress: "0x96347d982759b643997A1813D14Db1F606aa9ad4",
 }
 
-async function verify_proof (data, provider_url, abi = DEFAULT_ABI, contract_address = DEFAULT_CONTRACT_ADDRESS) {
-    if (data && provider_url) {
-        const contract = create_contract(provider_url, abi, contract_address)
+async function verifyProof (data, providerUrl, abi = DEFAULT_ABI, contractAddress = DEFAULT_CONTRACT_ADDRESS) {
+    if (data && providerUrl) {
+        const contract = createContract(providerUrl, abi, contractAddress)
 
-        const events = await read_all_events(contract)
+        const events = await readAllEvents(contract)
 
-        const valid_blocknumbers = check_blocknumbers(data, events.merkleRootRequestedEvents);
+        const validBlockNumbers = checkBlockNumbers(data, events.merkleRootRequestedEvents);
 
-        if (!valid_blocknumbers) return false;
+        if (!validBlockNumbers) return false;
 
         // console.log(events.sensorAddressUpdatedEvents);
 
-        const assigned_data = assign_data_for_verification(data, events)
+        const assignedData = assignDataForVerification(data, events)
 
 
         //iwo hier noch signatur prüfen
         const leafs = [];
-        for(data_entry of assigned_data) {
-            // console.log(data_entry)
-            let temp_leaf = [data_entry.blocknumber, await generate_leaf(general, data_entry)]
-            leafs.push(temp_leaf);
+        for(dataEntry of assignedData) {
+            // console.log(dataEntry)
+            let tempLeaf = [dataEntry.blockNumber, await generateLeaf(general, dataEntry)]
+            leafs.push(tempLeaf);
 
         }
 
 
 
-        const merkle_root_from_blockchain = await read_merkle_root(contract)
+        const merkleRootFromBlockchain = await readMerkleRoot(contract)
 
-        const merkle_tree = create_merkle_tree(leafs)
-        const merkle_root_from_data = merkle_tree.root
-        console.log("Merkle Root from data: " + merkle_root_from_data)
+        const merkleTree = createMerkleTree(leafs)
+        const merkleRootFromData = merkleTree.root
+        console.log("Merkle Root from data: " + merkleRootFromData)
 
-        if (merkle_root_from_blockchain == merkle_root_from_data) {
+        if (merkleRootFromBlockchain == merkleRootFromData) {
             return true;
         } else {
             return false;
@@ -65,25 +65,25 @@ async function verify_proof (data, provider_url, abi = DEFAULT_ABI, contract_add
 
 }
 
-async function data_from_website (api_url = DEFAULT_DATA_API_URL) {
-    return get_all_data(api_url);
+async function dataFromWebsite (apiUrl = DEFAULT_DATA_API_URL) {
+    return getAllData(apiUrl);
 }
 
-async function graph_for_data (data) {
-    await plot_data(data);
+async function graphForData (data) {
+    await plotData(data);
 }
 
 
-function create_merkle_tree (values) {
-    leaf_type = ["uint256", "string"]
-    return StandardMerkleTree.of(values, leaf_type);
+function createMerkleTree (values) {
+    leafType = ["uint256", "string"]
+    return StandardMerkleTree.of(values, leafType);
 }
 
 module.exports = {
-    verify_proof,
-    data_from_website,
-    graph_for_data,
-    create_merkle_tree
+    verifyProof,
+    dataFromWebsite,
+    graphForData,
+    createMerkleTree
 }
 
 
