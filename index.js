@@ -8,7 +8,7 @@ const { plotData } = require("./data_plotter/data_plotter");
 const { checkBlockNumbers, assignDataForVerification } = require("./data_verifier/data_verifier");
 const { generateLeaf } = require("./ipfs/ipfs");
 
-const DEFAULT_DATA_API_URL = "http://127.0.0.1:8000/read_table"
+const DEFAULT_DATA_API_URL = "http://127.0.0.1:8000/read-table"
 
 
 const general = {

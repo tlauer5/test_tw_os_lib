@@ -85,10 +85,10 @@ function fillTemplateWithData (template, general, data) {
   template["units"]["temperature"] = general.temperatureUnit
   template["units"]["humidity"] = general.humidityUnit
 
-  template["sensor_signature"]= data.signature
+  template["sensorSignature"]= data.signature
 
-  template["sensor_data"]["temperature"] = data.temperature
-  template["sensor_data"]["humidity"] = data.humidity
+  template["sensorData"]["temperature"] = data.temperature
+  template["sensorData"]["humidity"] = data.humidity
 
   return template
 }
