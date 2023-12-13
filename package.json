@@ -1,6 +1,6 @@
 {
   "name": "@timtester-tw/test-tw-os-lib",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Checks data integrity of sensor data with blockchain based data integrity scheme",
   "main": "index.js",
   "scripts": {
