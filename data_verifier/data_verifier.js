@@ -72,25 +72,20 @@ function assignDataForVerification(data, events) {
 
 }
 
-function check_signatures() {
 
-
-
-
-}
-
-async function recover_address(data) {
+async function recoverAddressFromData(data) {
     var reconstructed_message = data.blockNumber + "," + data.temperature + "," + data.humidity //create_message(data);
     const address = Web3.eth.accounts.recover(reconstructed_message, data.signature)
     return address
 }
 
 
-function check_order_of_blockNumbers(data, merkleRootRequestedEvents, merkleRootUpdatedEvents) {
+function checkOrderOfBlockNumbers(data, merkleRootRequestedEvents, merkleRootUpdatedEvents) {
 
 }
 
 module.exports = {
     checkBlockNumbers,
     assignDataForVerification,
+    recoverAddressFromData,
 };

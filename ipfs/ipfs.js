@@ -11,8 +11,6 @@ const axios = require('axios');
 async function generateLeaf(general, data) {
   const jsonForIpfs = await generateJsonForIpfs(general, data)
   const cid = await createCid(jsonForIpfs, data.cidDataFormat)
-  // await storeBlobToIPFS(jsonForIpfs, apiKey);
-
   return cid;
 }
 
@@ -109,5 +107,6 @@ module.exports = {
   fetchDataFromIpfs,
   fillTemplateWithData,
   generateJsonForIpfs,
-  generateLeaf
+  generateLeaf,
+  storeBlobToIPFS
 };
