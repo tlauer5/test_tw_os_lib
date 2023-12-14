@@ -20,7 +20,7 @@ async function readSensor (contract) {
     }
 }
 
-async function readCidDataFormat () {
+async function readCidDataFormat (contract) {
     try {
         const result = await contract.cidDataFormat();
         console.log("Read cidDataFormat: " + result + " from contract.\n");

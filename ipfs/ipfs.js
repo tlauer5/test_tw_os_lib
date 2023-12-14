@@ -9,7 +9,7 @@ const axios = require('axios');
 
 
 async function generateLeaf(general, data) {
-  const bufferForIpfs = await generateBufferForIpfs(general, data)
+  const bufferForIpfs = await generateBufferForIpfs(data.cidDataFormat.dataTemplateCid, general, data)
   const cid = await createCid(bufferForIpfs, data.cidDataFormat)
   return cid;
 }
@@ -92,8 +92,8 @@ function fillTemplateWithData (template, general, data) {
 }
 
 
-async function generateBufferForIpfs (general, data) {
-  const template = await fetchDataFromIpfs(data.cidDataFormat.dataTemplateCid);
+async function generateBufferForIpfs (dataTemplateCid, general, data) {
+  const template = await fetchDataFromIpfs(dataTemplateCid);
   filledTemplate = fillTemplateWithData(template, general, data);
 
   const formattedJson = JSON.stringify(filledTemplate, null, 2);
