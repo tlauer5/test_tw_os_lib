@@ -91,7 +91,8 @@ module.exports = {
     storeBlobToIPFS,
     readSensor,
     readMerkleRoot,
-    readCidDataFormat
+    readCidDataFormat,
+    createContract
 }
 
 
