@@ -1,6 +1,5 @@
-const CID = require('cids');
-const multihashing = require('multihashing-async');
 const axios = require('axios');
+const { CID, multihash } = require('multiformats');
 
 
 // CID Inspector um CID auseinander zu nehmen. Wie ist CID aufgebaut. Dann kann man den Prozess reproduzieren.
@@ -31,24 +30,18 @@ async function storeBlobToIPFS (blobData, apiKey) {
   }
 }
 
-
 async function createCid (buffer, cidDataFormat) {
 
-  const algorithm = cidDataFormat.multihashAlgorithm; //"sha2-256"
-  const version = getCidVersion(cidDataFormat.version); //1
-  const multicodec = cidDataFormat.multicodec; //raw
+  const { multihashAlgorithm, version, multicodec } = cidDataFormat;
 
+  const hash = await multihash.hash(buffer, multihashAlgorithm);
 
-  // Hash the data using SHA-256
-  const hash = await multihashing(buffer, algorithm);
+  const cid = CID.create(version, multicodec, hash);
 
-  // Create a CID using the hash
-  const cid = new CID(version, multicodec, hash);
+  const cidString = cid.toString(); //cid.toBaseEncodedString('base32');
 
-  // Convert the CID to its string representation
-  const cidString = cid.toString()//cid.toBaseEncodedString('base32');
+  return cidString;
 
-  return cidString
 }
 
 
