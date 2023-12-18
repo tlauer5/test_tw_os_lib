@@ -1,6 +1,6 @@
 const axios = require('axios');
-const { CID, multihash } = require('multiformats');
-
+const CID = require('cids');
+const multihashing = require('multihashing-async');
 
 // CID Inspector um CID auseinander zu nehmen. Wie ist CID aufgebaut. Dann kann man den Prozess reproduzieren.
 // https://cid.ipfs.tech/
@@ -34,13 +34,13 @@ async function createCid (buffer, cidDataFormat) {
 
   const { multihashAlgorithm, version, multicodec } = cidDataFormat;
 
-  const hash = await multihash.hash(buffer, multihashAlgorithm);
+  const hash = await multihashing(buffer, multihashAlgorithm);
 
-  const cid = CID.create(version, multicodec, hash);
+  const cid = new CID(getCidVersion(version), multicodec, hash);
 
-  const cidString = cid.toString(); //cid.toBaseEncodedString('base32');
+  const cidString = cid.toString()//cid.toBaseEncodedString('base32');
 
-  return cidString;
+  return cidString
 
 }
 
